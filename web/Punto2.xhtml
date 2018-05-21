@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Registro Libros</title>
+    </h:head>
+    <h:body>
+        <p:panel id="pnlLibro" header="Registro de Libros">
+            <h:form id="frmLibro">
+                <h:panelGrid id="tblLibro" columns="2">
+                    <p:outputLabel for="txtIsbn" value="Ingrese ISBN: "/>
+                    <p:inputText id="txtIsbn" value="#{libroFormBean.isbn}" required="true"/>
+                    <p:outputLabel for="txtTitulo" value="Ingrese Titulo: "/>
+                    <p:inputText id="txtTitulo" value="#{libroFormBean.tit}" required="true"/>
+                    <p:outputLabel for="autor" value="Seleccione Autor: "/>
+                    <p:selectOneMenu id="autor" value="#{libroFormBean.unAutor}"
+                                     converter="omnifaces.SelectItemsConverter" required="true">
+                        <f:selectItems value="#{libroFormBean.aut}" var="a"
+                                       itemLabel="#{a.apellido}"
+                                       itemValue="#{a}"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel for="txtPrecio" value="Ingrese Precio: "/>
+                    <p:inputNumber id="txtPrecio" decimalPlaces="2"
+                                   thousandSeparator="." decimalSeparator=","
+                                   value="#{libroFormBean.pre}"
+                                   required="true"/>
+                    <p:outputLabel/>
+                    <p:commandButton id="btnGuardarLibro" value="Registrar Libro" actionListener="#{libroFormBean.registrarLibro()}" update="dtTbLibros"/>
+                </h:panelGrid>
+                <h:panelGrid id="tblMuestraLibro" columns="4">
+                    <h:panelGrid columns="4">
+                        <p:dataTable id="dtTbLibros" value="#{libroFormBean.listaLibro.listadoLibro}" var="cadaLibro" emptyMessage="Sin registros">
+                            <p:column headerText="ISBN">
+                                <p:outputLabel value="#{cadaLibro.isbn}"/>
+                            </p:column>
+                            <p:column headerText="Titulo">
+                                <p:outputLabel value="#{cadaLibro.titulo}"/>
+                            </p:column>
+                            <p:column headerText="Autor">
+                                <p:outputLabel value="#{cadaLibro.autor}"/>
+                            </p:column>
+                            <p:column headerText="Precio">
+                                <p:outputLabel value="#{cadaLibro.precio}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </h:panelGrid>
+                    <h:panelGrid columns="1">
+                        <p:column headerText="Buscar">
+                            <p:commandButton icon="ui-icon-search"
+                                             oncomplete="PF('buscarLibro').show()"
+                                             update="frmBuscarLibro"
+                                             />
+                        </p:column>
+                    </h:panelGrid>
+                </h:panelGrid>
+            </h:form>
+        </p:panel>
+        <h:form>
+            <p:commandButton action="#{conectorFormBean.navega(9)}" icon="ui-icon-circle-arrow-w"/>
+        </h:form>
+        <p:dialog id="dlgBuscarLibro"
+                  widgetVar="buscarLibro"
+                  header="Buscar Libro"
+                  resizable="false"
+                  showEffect="explode"
+                  width="1000"
+                  hideEffect="explode" modal="true">
+            <h:form id="frmBuscarLibro">
+                <p:panelGrid id="ola" columns="1">
+                    <h:panelGrid id="Buscar" columns="4">
+                    <p:outputLabel for="titulo" value="Titulo a buscar:"/>
+                    <p:inputText id="titulo" required="true"
+                                 value="#{libroFormBean.titulot}"/>
+                    <p:commandButton id="btnBuscarLibro" value="Buscar"
+                                     update=":frmBuscarLibro"
+                                     actionListener="#{libroFormBean.buscarLibro()}"/>
+                    <p:commandButton id="btnCerrarBuscarAuto" value="Salir"
+                                     oncomplete="PF('buscarLibro').hide()"
+                                     actionListener="#{libroFormBean.limpiar()}"/>
+                    </h:panelGrid>
+                    <p:dataTable id="dtTbLibroBuscado" value="#{libroFormBean.libroaux}" emptyMessage="No encontrado">
+                        <p:column headerText="ISBN">
+                            <p:outputLabel value="#{libroFormBean.libroaux.isbn}"/>
+                        </p:column>
+                        <p:column headerText="Titulo">
+                            <p:outputLabel value="#{libroFormBean.libroaux.titulo}"/>
+                        </p:column>
+                        <p:column headerText="Autor">
+                            <p:outputLabel value="#{libroFormBean.libroaux.autor}"/>
+                        </p:column>
+                        <p:column headerText="Precio">
+                            <p:outputLabel value="#{libroFormBean.libroaux.precio}"/>
+                        </p:column>
+                    </p:dataTable>
+                </p:panelGrid>
+                
+            </h:form>    
+        </p:dialog>
+    </h:body>
+</html>
+

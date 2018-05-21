@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Subir imagen</title>
+    </h:head>
+    <h:body>
+        <p:panel id="pnlImagen" header="Tabla de Imagenes">
+            <p:growl id="mensaje3" showDetail="true"/>
+            <h:form id="frmCargaImagen" enctype="multipart/form-data">
+                <h:panelGrid id="tblCargaImagen" columns="2">
+                    <p:outputLabel for="fecha" 
+                                   value="Fecha:"/>
+                    <p:inputText id="fecha"
+                                 value="#{imagenFormBean.fecha}"
+                                 required="true"/>
+                    <p:outputLabel for="img" 
+                                   value="Imagen:"/>
+                    <p:fileUpload id="img" 
+                                  value="#{imagenFormBean.file}"
+                                  mode="simple"
+                                  invalidFileMessage="No puede cargar ese archivo."/>
+                    <p:commandButton id="btnGuardarImagen"
+                                     value="Guardar"
+                                     update="pnlMuestraImagen"
+                                     ajax="false"
+                                     actionListener="#{imagenFormBean.agregarImagen()}"/>
+                    <p:commandButton id="btnReiniciarImagen"
+                                     icon="ui-icon-refresh"
+                                     update="pnlMuestraImagen"
+                                     ajax="false"
+                                     actionListener="#{imagenFormBean.reiniciarImagen()}"/>
+                    <p:panel id="pnlMuestraImagen">
+                        <p:graphicImage width="100"
+                                        value="#{imagenFormBean.nuevaImagen}"
+                                        height="100"
+                                        cache="false"
+                                        alt="Imagen no disponible"/>
+                    </p:panel>
+                </h:panelGrid>
+            </h:form>
+            <h:form id="tblMuestraLista">
+                <p:dataTable id="tblImagenes" 
+                             var="imgs" 
+                             value="#{imagenFormBean.obtenerLista()}" 
+                             paginator="true"
+                             rows="6"
+                             emptyMessage="Sin imagenes subidas">
+                    <p:column headerText="Imagen"
+                              style="width: 130px">
+                        <p:graphicImage width="100"
+                                        value="#{imagenFormBean.imagenSubidaListado}"
+                                        height="100"
+                                        cache="false"
+                                        rendered="true"
+                                        alt="No disponible">
+                            <f:param name="numImg" value="#{imgs.numImg}"/>
+                        </p:graphicImage>
+                    </p:column>
+                    <p:column headerText="Fecha">
+                        <p:outputLabel value="#{imgs.fecha}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </p:outputLabel>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </p:panel>
+        <h:form>
+            <p:commandButton action="#{conectorFormBean.navega(4)}" value="Volver"/>
+        </h:form>
+    </h:body>
+</html>
+

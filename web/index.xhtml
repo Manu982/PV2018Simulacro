@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Simulacro</title>
+    </h:head>
+    <h:body>
+        <p:panel id="pnlInicio" header="Trabajo Practico N°5" footer="Velasques Manuel">
+            <h:form>
+                <h:panelGrid id="tblInicio" columns="3">
+                    <p:outputLabel/>
+                    <p:outputLabel value="Menu"/>
+                    <p:outputLabel/>
+                    <p:outputLabel value="1)"/>
+                    <p:outputLabel value="Listado de palabras"/>
+                    <p:commandButton action="#{conectorFormBean.navega(1)}" icon="ui-icon-arrowthick-1-e"/>
+                    <p:outputLabel value="2)"/>
+                    <p:outputLabel value="Registro de libros"/>
+                    <p:commandButton action="#{conectorFormBean.navega(2)}" icon="ui-icon-arrowthick-1-e"/>
+                    <p:outputLabel value="3)"/>
+                    <p:outputLabel value="Tabla de imagenes"/>
+                    <p:commandButton action="#{conectorFormBean.navega(3)}" icon="ui-icon-arrowthick-1-e"/>
+                </h:panelGrid>
+            </h:form>
+        </p:panel>
+    </h:body>
+</html>
+
